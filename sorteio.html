@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorteador Online</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; 
+            animation: mudarFundo 100s infinite alternate; 
+        }
+
+        @keyframes mudarFundo {
+            0% {
+                background-color: rgb(104, 101, 246); 
+            }
+            25% {
+                background-color: rgb(104, 246, 101); 
+            }
+            50% {
+                background-color: rgb(246, 104, 101); 
+            }
+            75% {
+                background-color: rgb(101, 104, 246); 
+            }
+            100% {
+                background-color: rgb(101, 246, 104); 
+            }
+        }
+
+        @keyframes subirDescer {
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(+7px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px 50px;
+            border-radius: 10px; 
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            animation: subirDescer 2s ease-in-out infinite; 
+        }
+
+        h1 {
+            color: #f25c5c;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        input {
+            padding: 10px;
+            font-size: 1em;
+            width: 100%;
+            max-width: 200px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 2px solid #f25c5c;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #ff8a80;
+        }
+
+        button {
+            padding: 12px 20px;
+            font-size: 1.2em;
+            background-color: #f25c5c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #ff8a80;
+        }
+
+        .resultado {
+            margin-top: 20px;
+            font-size: 2em;
+            color: #333;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sorteador</h1>
+        <p>Escolha o número máximo para o sorteio:</p>
+        <input type="number" id="maxNumber" placeholder="Digite o número máximo" min="1">
+        <button onclick="sortear()">Sortear!</button>
+        <div id="resultado" class="resultado"></div>
+    </div>
+
+    <script>
+        function sortear() {
+            const maxNumber = document.getElementById("maxNumber").value;
+            const resultadoDiv = document.getElementById("resultado");
+
+            // Verifica se o número máximo é válido
+            if (!maxNumber || Number(maxNumber) < 1) {
+                alert("Por favor, insira um número máximo válido! Deve ser maior que 0.");
+                return;
+            }
+
+            const resultados = [];
+            for (let i = 0; i < 5; i++) {
+                const sorteio = Math.floor(Math.random() * Number(maxNumber)) + 1;
+                resultados.push(sorteio);
+            }
+
+            // Exibe os resultados em uma string formatada
+            resultadoDiv.textContent = `Números sorteados: ${resultados.join(', ')}`;
+            resultadoDiv.style.opacity = 1;
+
+            // Adiciona animação de fade-in no resultado
+            setTimeout(() => {
+                resultadoDiv.style.opacity = 0;
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
